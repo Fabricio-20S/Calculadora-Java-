@@ -1,47 +1,51 @@
-import java.util.InputMismatchException; 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class CalculadoraTrigronometrica { 
-    public static void main (String[] args) {
+public class CalculadoraTrigonometrica {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int opcionPrincipal; 
+        int opcionPrincipal;
         boolean continuarPrincipal = true;
 
         do {
-            mostrarMenuPrincipal(); 
+            mostrarMenuPrincipal();
             try {
                 opcionPrincipal = scanner.nextInt();
 
                 switch (opcionPrincipal) {
                     case 1:
-                        ejecutarOperacionesDirectas(scanner); 
+                        ejecutarOperacionesDirectas(scanner);
                         break;
                     case 2:
                         ejecutarOperacionesInversas(scanner);
                         break;
                     case 3:
+                        ejecutarOperacionesHiperbolicas(scanner);
+                        break;
+                    case 4:
                         continuarPrincipal = false;
                         System.out.println("Saliendo de la calculadora. ¡Hasta luego!");
                         break;
                     default:
-                        System.out.println("Opción inválida. Selecciona una opción del 1 al 3.");
+                        System.out.println("Opción inválida. Selecciona una opción del 1 al 4.");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida. Por favor, ingresa un número.");
-                scanner.next(); 
-                opcionPrincipal = 0; 
+                scanner.next();
+                opcionPrincipal = 0;
             }
-            System.out.println(); 
+            System.out.println();
         } while (continuarPrincipal);
 
         scanner.close();
     }
 
     public static void mostrarMenuPrincipal() {
-        System.out.println("=== CALCULADORA TRIGONOMÉTRICA ===");
+        System.out.println("=== CALCULADORA TRIGONOMÉTRICA COMPLETA ===");
         System.out.println("1. Operaciones Trigonométricas Directas (sen, cos, tan)");
         System.out.println("2. Operaciones Trigonométricas Inversas (arcsin, arccos, arctan)");
-        System.out.println("3. Salir");
+        System.out.println("3. Operaciones Trigonométricas Hiperbólicas (sinh, cosh, tanh)");
+        System.out.println("4. Salir");
         System.out.print("Seleccione una opción: ");
     }
 
@@ -78,8 +82,8 @@ public class CalculadoraTrigronometrica {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida. Por favor, ingrese un número.");
-                scanner.next(); 
-                opcionDirecta = 0; 
+                scanner.next();
+                opcionDirecta = 0;
             }
             System.out.println();
         }
@@ -102,7 +106,7 @@ public class CalculadoraTrigronometrica {
             try {
                 opcionInversa = scanner.nextInt();
 
-                switch(opcionInversa) { 
+                switch(opcionInversa) {
                     case 1:
                         calcularArcSeno(scanner);
                         break;
@@ -113,7 +117,7 @@ public class CalculadoraTrigronometrica {
                         calcularArcTangente(scanner);
                         break;
                     case 4:
-                        continuarInversas = false; 
+                        continuarInversas = false;
                         System.out.println("Volviendo al menú principal...");
                         break;
                     default:
@@ -121,8 +125,8 @@ public class CalculadoraTrigronometrica {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida. Por favor, ingresa un número.");
-                scanner.next(); 
-                opcionInversa = 0; 
+                scanner.next();
+                opcionInversa = 0;
             }
 
             if (continuarInversas) {
@@ -131,16 +135,56 @@ public class CalculadoraTrigronometrica {
         }
     }
 
+    public static void ejecutarOperacionesHiperbolicas(Scanner scanner) {
+        int opcionHiperbolica;
+        boolean continuarHiperbolicas = true;
+
+        while (continuarHiperbolicas) {
+            System.out.println("\n--- Operaciones Trigonométricas Hiperbólicas ---");
+            System.out.println("1. Calcular Seno Hiperbólico (sinh)");
+            System.out.println("2. Calcular Coseno Hiperbólico (cosh)");
+            System.out.println("3. Calcular Tangente Hiperbólica (tanh)");
+            System.out.println("4. Volver al menú principal");
+            System.out.print("Seleccione una opción: ");
+
+            try {
+                opcionHiperbolica = scanner.nextInt();
+                switch (opcionHiperbolica) {
+                    case 1:
+                        calcularSenoHiperbolico(scanner);
+                        break;
+                    case 2:
+                        calcularCosenoHiperbolico(scanner);
+                        break;
+                    case 3:
+                        calcularTangenteHiperbolica(scanner);
+                        break;
+                    case 4:
+                        continuarHiperbolicas = false;
+                        System.out.println("Volviendo al menú principal...");
+                        break;
+                    default:
+                        System.out.println("Opción no válida. Por favor, intente de nuevo.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, ingrese un número.");
+                scanner.next();
+                opcionHiperbolica = 0;
+            }
+            System.out.println();
+        }
+    }
+
     public static void calcularSeno(Scanner scanner) {
         System.out.print("Ingrese el ángulo en grados para el seno: ");
         try {
             double anguloGrados = scanner.nextDouble();
-            double anguloRadianes = Math.toRadians(anguloGrados); 
+            double anguloRadianes = Math.toRadians(anguloGrados);
             double resultado = Math.sin(anguloRadianes);
             System.out.printf("El seno de %.2f grados es: %.4f%n", anguloGrados, resultado);
         } catch (InputMismatchException e) {
             System.out.println("Entrada inválida. Por favor, ingrese un número para el ángulo.");
-            scanner.next(); 
+            scanner.next();
         }
     }
 
@@ -148,12 +192,12 @@ public class CalculadoraTrigronometrica {
         System.out.print("Ingrese el ángulo en grados para el coseno: ");
         try {
             double anguloGrados = scanner.nextDouble();
-            double anguloRadianes = Math.toRadians(anguloGrados); 
+            double anguloRadianes = Math.toRadians(anguloGrados);
             double resultado = Math.cos(anguloRadianes);
             System.out.printf("El coseno de %.2f grados es: %.4f%n", anguloGrados, resultado);
         } catch (InputMismatchException e) {
             System.out.println("Entrada inválida. Por favor, ingrese un número para el ángulo.");
-            scanner.next(); 
+            scanner.next();
         }
     }
 
@@ -175,51 +219,101 @@ public class CalculadoraTrigronometrica {
             }
         } catch (InputMismatchException e) {
             System.out.println("Entrada inválida. Por favor, ingrese un número para el ángulo.");
-            scanner.next(); 
+            scanner.next();
         }
     }
 
-
     private static void calcularArcSeno(Scanner scanner) {
         System.out.print("Ingresa el valor de α para arcsin(α): ");
-        double alpha = scanner.nextDouble();
+        try {
+            double alpha = scanner.nextDouble();
 
-        if (alpha < -1 || alpha > 1) {
-            System.out.println("Error: El valor debe estar entre -1 y 1 para arcsin(α)"); 
-            return;
+            if (alpha < -1 || alpha > 1) {
+                System.out.println("Error: El valor debe estar entre -1 y 1 para arcsin(α)");
+                return;
+            }
+
+            double resultado = Math.asin(alpha);
+            double resultadoGrados = Math.toDegrees(resultado);
+
+            System.out.printf("arcsin(%.4f) = %.4f radianes\n", alpha, resultado);
+            System.out.printf("arcsin(%.4f) = %.4f grados\n", alpha, resultadoGrados);
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Por favor, ingrese un número.");
+            scanner.next();
         }
-
-        double resultado = Math.asin(alpha);
-        double resultadoGrados = Math.toDegrees(resultado);
-
-        System.out.printf("arcsin(%.4f) = %.4f radianes\n", alpha, resultado);
-        System.out.printf("arcsin(%.4f) = %.4f grados\n", alpha, resultadoGrados);
     }
 
     private static void calcularArcCoseno(Scanner scanner) {
         System.out.print("Ingresa el valor de α para arccos(α): ");
-        double alpha = scanner.nextDouble();
+        try {
+            double alpha = scanner.nextDouble();
 
-        if (alpha < -1 || alpha > 1) {
-            System.out.println("Error: El valor debe estar entre -1 y 1 para arccos(α)");
-            return;
+            if (alpha < -1 || alpha > 1) {
+                System.out.println("Error: El valor debe estar entre -1 y 1 para arccos(α)");
+                return;
+            }
+
+            double resultado = Math.acos(alpha);
+            double resultadoGrados = Math.toDegrees(resultado);
+
+            System.out.printf("arccos(%.4f) = %.4f radianes\n", alpha, resultado);
+            System.out.printf("arccos(%.4f) = %.4f grados\n", alpha, resultadoGrados);
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Por favor, ingrese un número.");
+            scanner.next();
         }
-
-        double resultado = Math.acos(alpha);
-        double resultadoGrados = Math.toDegrees(resultado);
-
-        System.out.printf("arccos(%.4f) = %.4f radianes\n", alpha, resultado);
-        System.out.printf("arccos(%.4f) = %.4f grados\n", alpha, resultadoGrados);
     }
 
     private static void calcularArcTangente(Scanner scanner) {
         System.out.print("Ingresa el valor de α para arctan(α): ");
-        double alpha = scanner.nextDouble();
+        try {
+            double alpha = scanner.nextDouble();
 
-        double resultado = Math.atan(alpha);
-        double resultadoGrados = Math.toDegrees(resultado);
+            double resultado = Math.atan(alpha);
+            double resultadoGrados = Math.toDegrees(resultado);
 
-        System.out.printf("arctan(%.4f) = %.4f radianes\n", alpha, resultado);
-        System.out.printf("arctan(%.4f) = %.4f grados\n", alpha, resultadoGrados);
+            System.out.printf("arctan(%.4f) = %.4f radianes\n", alpha, resultado);
+            System.out.printf("arctan(%.4f) = %.4f grados\n", alpha, resultadoGrados);
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Por favor, ingrese un número.");
+            scanner.next();
+        }
+    }
+
+    private static void calcularSenoHiperbolico(Scanner scanner) {
+        System.out.print("Ingrese el valor para calcular sinh(x): ");
+        try {
+            double valor = scanner.nextDouble();
+            double resultado = Math.sinh(valor);
+            System.out.printf("sinh(%.4f) = %.6f\n", valor, resultado);
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Por favor, ingrese un número.");
+            scanner.next();
+        }
+    }
+
+    private static void calcularCosenoHiperbolico(Scanner scanner) {
+        System.out.print("Ingrese el valor para calcular cosh(x): ");
+        try {
+            double valor = scanner.nextDouble();
+            double resultado = Math.cosh(valor);
+            System.out.printf("cosh(%.4f) = %.6f\n", valor, resultado);
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Por favor, ingrese un número.");
+            scanner.next();
+        }
+    }
+
+    private static void calcularTangenteHiperbolica(Scanner scanner) {
+        System.out.print("Ingrese el valor para calcular tanh(x): ");
+        try {
+            double valor = scanner.nextDouble();
+            double resultado = Math.tanh(valor);
+            System.out.printf("tanh(%.4f) = %.6f\n", valor, resultado);
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Por favor, ingrese un número.");
+            scanner.next();
+        }
     }
 }
